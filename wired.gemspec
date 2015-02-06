@@ -7,7 +7,6 @@ Gem::Specification.new do |s|
   s.authors     = ["Stefan Eilers"]
   s.email       = 'se@intelligentmobiles.com'
   s.files       = ["lib/wired.rb"]
-  s.homepage    =
-    'http://www.intelligentmobiles.com'
+  s.homepage    = 'https://github.com/eilers/wubook_wired'
   s.license       = 'MIT'
 end
