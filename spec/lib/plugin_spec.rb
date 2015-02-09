@@ -1,10 +1,11 @@
 require 'spec_helper'
+require 'date'
 
 module WuBook
   describe Wired do
     let(:config) { Hash.new }
 
-    let(:wired) { Wired.new({ 'account_code' => 'xxx', 'password' => 'xxxx', 'provider_key' => 'xxx'}) }
+    let(:wired) { Wired.new({ 'account_code' => 'SE016', 'password' => 'botzo2004', 'provider_key' => 'stfeltt39qt777'}) }
 
     before(:each) do
     end
@@ -31,7 +32,6 @@ module WuBook
       token = wired.aquire_token
       rooms = wired.fetch_rooms("1422356463", token)
       expect(rooms).not_to be_nil
-
       wired.release_token
     end
 
@@ -46,10 +46,10 @@ module WuBook
 
       # Set next day as not available.
       test_data = [ {'id' => room_id, 'days' => [{'avail' => 0}, {'avail' => 1}]} ]
-      wired.update_rooms_values("1422356463", Date.tomorrow, test_data)
+      wired.update_rooms_values("1422356463", Date.today + 1, test_data)
 
       # Check whether change worked. 
-      room_values = wired.fetch_rooms_values("1422356463", Date.today, Date.tomorrow)
+      room_values = wired.fetch_rooms_values("1422356463", Date.today, Date.today + 1)
 
       room_values_for_changed_room = room_values[room_id.to_s]
 
@@ -59,10 +59,10 @@ module WuBook
 
       # Cleanup our mess..
       test_data = [ {'id' => room_id, 'days' => [{'avail' => 1}, {'avail' => 1}]} ]
-      wired.update_rooms_values("1422356463", Date.tomorrow, test_data)
+      wired.update_rooms_values("1422356463", Date.today + 1, test_data)
 
       # And check whether the cleanup worked.
-      room_values = wired.fetch_rooms_values("1422356463", Date.today, Date.tomorrow, [room_id])
+      room_values = wired.fetch_rooms_values("1422356463", Date.today, Date.today + 1, [room_id])
       room_values_for_changed_room = room_values[room_id.to_s]
       expect(room_values_for_changed_room[0]['avail']).to eq(1)
       expect(room_values_for_changed_room[1]['avail']).to eq(1)
