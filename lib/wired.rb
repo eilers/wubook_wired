@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'xmlrpc/client'
+require 'xmlparser'
 require 'date'
 
 # class XMLRPC::Client
@@ -126,6 +127,7 @@ class Wired
   def server
     server = XMLRPC::Client.new2 ("https://wubook.net/xrws/")
     #server.set_debug
+    server.set_parser(XMLRPC::XMLParser::XMLStreamParser.new)
     server
   end
 
