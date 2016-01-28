@@ -29,7 +29,7 @@ class Wired
     @token = token_data[1]
     if (is_error(status)) 
       error_message = decode_error(status)
-      raise "Unable to aquire token. Reason: #{error_message}, Message: #{data}"
+      raise "Unable to aquire token. Reason: #{error_message}"
     end
     @token
   end
